@@ -27,8 +27,8 @@ def exchange_money(budget, exchange_rate):
     This function calculates and returns the (estimated) value of the exchanged currency.
 
     """
+    return budget / exchange_rate
 
-    pass
 
 
 def get_change(budget, exchanging_value):
@@ -53,7 +53,7 @@ def get_change(budget, exchanging_value):
 
     """
 
-    pass
+    return budget - exchanging_value
 
 
 def get_value_of_bills(denomination, number_of_bills):
@@ -76,8 +76,7 @@ def get_value_of_bills(denomination, number_of_bills):
     This function calculates and returns the total value of the bills (excluding fractional amounts).
 
     """
-
-    pass
+    return denomination * number_of_bills
 
 
 def get_number_of_bills(amount, denomination):
@@ -102,7 +101,7 @@ def get_number_of_bills(amount, denomination):
 
     """
 
-    pass
+    return amount // denomination
 
 
 def get_leftover_of_bills(amount, denomination):
@@ -126,8 +125,7 @@ def get_leftover_of_bills(amount, denomination):
     returned from starting amount, due to the currency denomination.
 
     """
-
-    pass
+    return (amount/denomination - amount//denomination) * denomination
 
 
 def exchangeable_value(budget, exchange_rate, spread, denomination):
@@ -155,5 +153,14 @@ def exchangeable_value(budget, exchange_rate, spread, denomination):
     This function calculates and returns the maximum value of the new currency after
     determining the exchange rate plus the spread.
     """
-
-    pass
+   # 1. Calculate the actual exchange rate including the spread fee
+    actual_rate = exchange_rate * (1 + spread / 100)
+    
+    # 2. Convert the budget into the foreign currency
+    exchanged_amount = budget / actual_rate
+    
+    # 3. Find the maximum number of whole bills you can get (floor division)
+    number_of_bills = int(exchanged_amount // denomination)
+    
+    # 4. Multiply the number of bills by the bill's value
+    return number_of_bills * denomination
